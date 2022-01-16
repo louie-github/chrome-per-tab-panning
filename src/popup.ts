@@ -1,40 +1,43 @@
 /// <reference path="../node_modules/chrome-extension-async/chrome-extension-async.d.ts" />
-import 'chrome-extension-async'
+import "chrome-extension-async";
 
-import Message from './interfaces/Message'
-import { MDCSlider } from '@material/slider'
+import Message from "./interfaces/Message";
 
-const sliderElem: HTMLDivElement = document.querySelector('#volume-slider')
-const slider = new MDCSlider(sliderElem)
+const volumeContainer: HTMLDivElement =
+  document.querySelector(".volume-container");
+const slider: HTMLInputElement = document.getElementById("volume-slider");
 
 void (async () => {
   // Hide the slider until we know the initial volume
-  sliderElem.style.opacity = '0'
+  volumeContainer.style.opacity = "0";
 
-  const initialValue = await getActiveTabVolume()
-  slider.value = initialValue * 100
+  const initialValue: number = await getActiveTabPanValue();
+  slider.value = (initialValue * 100).toString();
 
-  sliderElem.style.opacity = '1'
-})()
+  volumeContainer.style.opacity = "1";
+})();
 
-slider.listen('MDCSlider:input', () => {
-  const value = slider.value / 100
-  setActiveTabVolume(value)
-})
+slider.addEventListener("oninput", () => {
+  const value = parseInt(slider.value) / 100;
+  setActiveTabVolume(value);
+});
 
-async function getActiveTabVolume () {
-  const tabId = await getActiveTabId()
-  const message: Message = { name: 'get-tab-volume', tabId }
-  return chrome.runtime.sendMessage(message)
+async function getActiveTabPanValue() {
+  const tabId = await getActiveTabId();
+  const message: Message = { name: "get-tab-pan-value", tabId };
+  return await chrome.runtime.sendMessage(message);
 }
 
-async function setActiveTabVolume (value: number) {
-  const tabId = await getActiveTabId()
-  const message: Message = { name: 'set-tab-volume', tabId, value }
-  return chrome.runtime.sendMessage(message)
+async function setActiveTabVolume(value: number) {
+  const tabId = await getActiveTabId();
+  const message: Message = { name: "set-tab-pan-value", tabId, value };
+  return await chrome.runtime.sendMessage(message);
 }
 
-async function getActiveTabId () {
-  const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true })
-  return activeTab.id
+async function getActiveTabId() {
+  const [activeTab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  return activeTab.id;
 }

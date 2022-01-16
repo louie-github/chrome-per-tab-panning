@@ -1,8 +1,8 @@
 type Message = {
-  name: 'get-tab-volume',
+  name: 'get-tab-pan-value',
   tabId: number
 } | {
-  name: 'set-tab-volume',
+  name: 'set-tab-pan-value',
   tabId: number,
   value: number
 }
