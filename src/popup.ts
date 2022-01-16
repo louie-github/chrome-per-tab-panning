@@ -4,9 +4,10 @@ import "chrome-extension-async";
 import Message from "./interfaces/Message";
 
 const volumeContainer: HTMLDivElement =
-  document.querySelector(".volume-container");
-const slider: HTMLInputElement = document.getElementById("volume-slider");
-const textDisplay: HTMLSpanElement = document.querySelector("#volume-text");
+  document.querySelector(".slider-container");
+const slider: HTMLInputElement = document.getElementById("slider-main");
+const textDisplay: HTMLSpanElement =
+  document.querySelector(".slider-value-text");
 
 void (async () => {
   // Hide the slider until we know the initial volume

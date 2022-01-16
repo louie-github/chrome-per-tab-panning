@@ -1,15 +1,15 @@
 <html>
   <head>
-    <link rel="stylesheet" href="./popup.scss" />
+    <link rel="stylesheet" href="./popup.css" />
   </head>
 
   <body>
-    <main>
-      <div class="volume-container">
-        <input type="range" id="volume-slider" min="-100" max="100" value="0" />
-        <div class="volume-text-container">
-          <span id="volume-text">0</span>
-        </div>
+    <main class="display-container">
+      <div class="display-row">
+        <input type="range" id="slider-main" min="-100" max="100" value="0" />
+      </div>
+      <div class="display-row">
+        <span class="slider-value-text">0</span>
       </div>
     </main>
 
