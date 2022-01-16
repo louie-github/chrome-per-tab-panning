@@ -1,7 +1,7 @@
 {
-  "name": "chrome-volume-manager",
-  "version": "1.1.0",
-  "description": "Chrome extension to control any tab's volume separately",
+  "name": "chrome-per-tab-panning",
+  "version": "1.0.0",
+  "description": "A simple Chrome extension to pan individual tabs left and right.",
   "files": [
     "dist",
     "!*.map"
@@ -12,23 +12,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/piousdeer/chrome-volume-manager.git"
+    "url": "git+https://github.com/louie-github/chrome-per-tab-panning.git"
   },
-  "author": "piousdeer",
+  "author": "louie-github",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/piousdeer/chrome-volume-manager/issues"
+    "url": "https://github.com/louie-github/chrome-per-tab-panning/issues"
   },
-  "homepage": "https://github.com/piousdeer/chrome-volume-manager#readme",
+  "homepage": "https://github.com/louie-github/chrome-per-tab-panning#readme",
   "devDependencies": {
     "@types/material-components-web": "^0.43.1",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.2.1",
     "sass": "^1.23.2",
-    "tslint": "^5.20.0",
-    "tslint-config-standeerd": "^4.0.0",
     "typescript": "^3.6.4"
   },
   "dependencies": {

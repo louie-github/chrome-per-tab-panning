@@ -1,17 +1,25 @@
 <center>
-  <h1 align="center">Volume Manager</h1>
-  <h3 align="center">A simple Chrome extension to control any tab's volume separately.</h3>
-  <img align="center" src='https://owo.sh/65AVTty.png' />
+  <h1 align="center">Per-tab Panning</h1>
+  <h3 align="center">A simple Chrome extension to pan individual tabs left and right.</h3>
 </center><br>
 
-* Click on the extension icon and drag the slider to adjust the volume of the active tab
-* You can reduce its volume down to 0% and boost it up to 600%
-* The current volume is displayed as a badge next to the icon
+* Click on the extension icon and drag the slider to adjust the panning
+  of the active tab.
+* [functionality to be implemented]
+* The current panning setting is displayed as a badge next to the icon.
 
-There are several similar extensions. However, they're either filled with telemetry and analytics, or their UI sucks.
+# Credits
+Thanks to [piousdeer](https://github.com/piousdeer/chrome-volume-manager)
+for nearly all of the code written in this repository. Only minor
+changes have been made.
 
 # Usage
-This extension is not in Chrome Web Store yet; you have to build it yourself.
-1. Clone this repository
+This extension is not published in the Chrome Web Store as it is in
+development and is mainly an **academic exercise**; you have to build
+it yourself.
+
+## Steps:
+1. Clone this repository by running `git clone https://github.com/louie-github/chrome-per-tab-panning.git`
 2. Run `npm install && npm run build`
-3. Go to `chrome://extensions/`, enable developer mode and load `dist` folder as an unpacked extension
+3. Go to `chrome://extensions/`, enable Developer Mode, click on
+   "Load unpacked", and select the `dist` folder.
