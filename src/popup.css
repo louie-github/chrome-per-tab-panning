@@ -1,10 +1,12 @@
 :root {
   --fg-color: white;
-  --bg-color: hsl(240, 8%, 15%);
+  --bg-color: hsl(213, 28%, 15%);
+  --color-1: hsl(234, 72%, 61%);
+  --color-1-darker: hsl(234, 62%, 38%);
 }
 
 html {
-  height: 4.5em;
+  height: 4em;
   width: 15em;
 }
 
@@ -14,8 +16,8 @@ body {
   margin: 0;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   background: var(--bg-color, black);
 }
 
@@ -26,23 +28,48 @@ body {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .display-row {
+  position: relative;
   width: 100%;
 
   margin: 0.25em 0;
 
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+}
+
+.display-row-main {
+  justify-content: flex-start;
 }
 
 #slider-main {
-  width: 100%;
+  width: calc(100% - 2.5em);
+  color: var(--color-1);
+}
+
+#reset-button {
+  padding: 0.15em 0.4em;
+
+  position: absolute;
+  right: 0;
+
+  background-color: var(--color-1);
+  border: none;
+  border-radius: 0.25em;
+
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--fg-color);
+}
+
+#reset-button:active {
+  background-color: var(--color-1-darker);
 }
 
 .slider-display-container {

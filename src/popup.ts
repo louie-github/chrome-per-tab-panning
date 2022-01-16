@@ -8,6 +8,7 @@ const volumeContainer: HTMLDivElement =
 const slider: HTMLInputElement = document.getElementById("slider-main");
 const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
 const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
+const resetBtn: HTMLButtonElement = document.getElementById("reset-button");
 
 void (async () => {
   // Hide the slider until we know the initial volume
@@ -36,16 +37,19 @@ function updateSliderDisplay() {
   valueSpan.textContent = `${slider.value}%`;
 }
 
+function resetSlider() {
+  slider.value = "0";
+  updateSliderDisplay();
+  setActiveTabVolume(0);
+}
+
 slider.addEventListener("input", () => {
   updateSliderDisplay();
   setActiveTabVolume(parseInt(slider.value) / 100);
 });
 
-slider.addEventListener("dblclick", () => {
-  slider.value = "0";
-  updateSliderDisplay();
-  setActiveTabVolume(0);
-});
+slider.addEventListener("dblclick", resetSlider);
+resetBtn.addEventListener("click", resetSlider);
 
 async function getActiveTabPanValue() {
   const tabId = await getActiveTabId();
