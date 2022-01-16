@@ -1,10 +1,9 @@
-@import '@material/slider/dist/mdc.slider.css';
-
 :root {
   --mdc-theme-secondary: #3367d6;
 }
 
-html, body {
+html,
+body {
   height: 77px;
   width: 360px;
 }
@@ -21,10 +20,7 @@ main {
   margin: 0 20px;
 }
 
-.mdc-slider {
+#volume-slider {
   transition: opacity 500ms;
-}
-
-.mdc-slider__pin-value-marker {
-  font-size: 0.575rem;
+  width: 100%;
 }
