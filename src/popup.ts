@@ -6,8 +6,7 @@ import Message from "./interfaces/Message";
 const volumeContainer: HTMLDivElement =
   document.querySelector(".slider-container");
 const slider: HTMLInputElement = document.getElementById("slider-main");
-const textDisplay: HTMLSpanElement =
-  document.querySelector(".slider-value-text");
+const textDisplay: HTMLSpanElement = document.getElementById("slider-value");
 
 void (async () => {
   // Hide the slider until we know the initial volume

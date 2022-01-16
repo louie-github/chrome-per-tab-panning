@@ -20,7 +20,7 @@ body {
 }
 
 .display-container {
-  width: 100%;
+  width: 85%;
   height: 100%;
   margin: 0.35em 0.5em;
 
@@ -42,10 +42,19 @@ body {
 }
 
 #slider-main {
-  width: 85%;
+  width: 100%;
 }
 
-.slider-value-text {
+.slider-display-container {
+  width: calc(100% - 0.5em);
+  justify-content: flex-start;
+}
+
+.slider-text {
   font-size: 1.15em;
   color: var(--fg-color, white);
+}
+
+#slider-value-prefix {
+  margin-right: 0.35em;
 }
