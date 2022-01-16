@@ -37,9 +37,14 @@ function updateSliderDisplay() {
 }
 
 slider.addEventListener("input", () => {
-  const value = parseInt(slider.value) / 100;
   updateSliderDisplay();
-  setActiveTabVolume(value);
+  setActiveTabVolume(parseInt(slider.value) / 100);
+});
+
+slider.addEventListener("dblclick", () => {
+  slider.value = "0";
+  updateSliderDisplay();
+  setActiveTabVolume(0);
 });
 
 async function getActiveTabPanValue() {
