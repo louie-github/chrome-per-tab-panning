@@ -6,7 +6,8 @@ import Message from "./interfaces/Message";
 const volumeContainer: HTMLDivElement =
   document.querySelector(".slider-container");
 const slider: HTMLInputElement = document.getElementById("slider-main");
-const textDisplay: HTMLSpanElement = document.getElementById("slider-value");
+const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
+const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
 
 void (async () => {
   // Hide the slider until we know the initial volume
@@ -14,19 +15,30 @@ void (async () => {
 
   const initialValue: number = await getActiveTabPanValue();
   slider.value = (initialValue * 100).toString();
-  updateTextDisplay();
+  updateSliderDisplay();
 
   volumeContainer.style.opacity = "1";
 })();
 
-function updateTextDisplay() {
-  console.log("updating");
-  textDisplay.textContent = slider.value;
+function isLeftRight() {
+  const value = parseInt(slider.value);
+  if (value < 0) {
+    return "\u2190 LEFT";
+  } else if (value > 0) {
+    return "RIGHT \u2192";
+  } else {
+    return "NONE";
+  }
+}
+
+function updateSliderDisplay() {
+  lrSpan.textContent = isLeftRight();
+  valueSpan.textContent = `${slider.value}%`;
 }
 
 slider.addEventListener("input", () => {
   const value = parseInt(slider.value) / 100;
-  updateTextDisplay();
+  updateSliderDisplay();
   setActiveTabVolume(value);
 });
 

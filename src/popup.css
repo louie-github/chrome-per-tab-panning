@@ -56,5 +56,9 @@ body {
 }
 
 #slider-value-prefix {
-  margin-right: 0.35em;
+  width: 5.25em;
+}
+
+#slider-value {
+  margin-right: 0.25em;
 }
