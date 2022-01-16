@@ -6,6 +6,7 @@ import Message from "./interfaces/Message";
 const volumeContainer: HTMLDivElement =
   document.querySelector(".volume-container");
 const slider: HTMLInputElement = document.getElementById("volume-slider");
+const textDisplay: HTMLSpanElement = document.querySelector("#volume-text");
 
 void (async () => {
   // Hide the slider until we know the initial volume
@@ -13,12 +14,19 @@ void (async () => {
 
   const initialValue: number = await getActiveTabPanValue();
   slider.value = (initialValue * 100).toString();
+  updateTextDisplay();
 
   volumeContainer.style.opacity = "1";
 })();
 
-slider.addEventListener("oninput", () => {
+function updateTextDisplay() {
+  console.log("updating");
+  textDisplay.textContent = slider.value;
+}
+
+slider.addEventListener("input", () => {
   const value = parseInt(slider.value) / 100;
+  updateTextDisplay();
   setActiveTabVolume(value);
 });
 
