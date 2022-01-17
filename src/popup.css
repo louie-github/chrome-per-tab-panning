@@ -48,16 +48,8 @@ body {
   justify-content: flex-start;
 }
 
-#slider-main {
-  width: calc(100% - 2.5em);
-  color: var(--color-1);
-}
-
-#reset-button {
+button {
   padding: 0.15em 0.4em;
-
-  position: absolute;
-  right: 0;
 
   background-color: var(--color-1);
   border: none;
@@ -68,8 +60,18 @@ body {
   color: var(--fg-color);
 }
 
-#reset-button:active {
+button:active {
   background-color: var(--color-1-darker);
+}
+
+#slider-main {
+  width: calc(100% - 2.5em);
+  color: var(--color-1);
+}
+
+#reset-button {
+  position: absolute;
+  right: 0;
 }
 
 .slider-display-container {
@@ -83,7 +85,7 @@ body {
 }
 
 #slider-value-prefix {
-  width: 5.25em;
+  width: 4.75em;
 }
 
 #slider-value {
