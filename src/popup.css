@@ -25,6 +25,41 @@ body {
   background: var(--bg-color, black);
 }
 
+button:active {
+  background-color: var(--color-blue-darker);
+}
+
+/* Why must it be so hard to style an HTML5 input range? I even need
+   JavaScript. */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+
+  height: 0.6em;
+  border-radius: 1em;
+
+  background: linear-gradient(
+    to right,
+    var(--color-blue) 0%,
+    var(--color-blue) 50%,
+    var(--color-blue-desaturated) 50%,
+    var(--color-blue-desaturated) 100%
+  );
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 1.1em;
+  height: 1.1em;
+  box-shadow ;
+  border-radius: 1em;
+  background-color: var(--color-blue-slight-lighter);
+}
+
+
+
 .display-container {
   width: 85%;
   margin: 0.35em 0.5em;
@@ -62,39 +97,6 @@ button {
   font-size: 1.25em;
   font-weight: bold;
   color: var(--fg-color);
-}
-
-button:active {
-  background-color: var(--color-blue-darker);
-}
-
-/* Why must it be so hard to style an HTML5 input range? I even need
-   JavaScript. */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-
-  height: 0.6em;
-  border-radius: 1em;
-
-  background: linear-gradient(
-    to right,
-    var(--color-blue) 0%,
-    var(--color-blue) 50%,
-    var(--color-blue-desaturated) 50%,
-    var(--color-blue-desaturated) 100%
-  );
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-
-  width: 1.1em;
-  height: 1.1em;
-  box-shadow ;
-  border-radius: 1em;
-  background-color: var(--color-blue-slight-lighter);
 }
 
 #slider-main {
