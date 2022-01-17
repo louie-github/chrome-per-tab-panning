@@ -12,6 +12,6 @@
     "scripts": ["background.js"]
   },
   "icons": {
-    "512": "icon.png"
+    "512": "icons/logo_512.png"
   }
 }

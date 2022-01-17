@@ -9,11 +9,11 @@
 
   <body>
     <main class="display-container">
-      <div class="display-row display-row-main">
+      <div class="display-row main-row">
         <input type="range" id="slider-main" min="-100" max="100" value="0" />
         <button id="reset-button">X</button>
       </div>
-      <div class="display-row display-row-text-display">
+      <div class="display-row text-display">
         <span class="slider-text" id="slider-value-prefix">Pan value: </span>
         <span class="slider-text" id="slider-value">0%</span>
         <div id="slider-lr-container">
@@ -22,10 +22,10 @@
           <span class="slider-text">)</span>
         </div>
       </div>
-      <div class="display-row display-row-randomizer">
+      <div class="display-row randomizer">
         <button
           title="Randomly select between full left, full right, or no panning and let the user guess which is enabled."
-          id="randomizer-button"
+          class="randomizer-button"
         >
           Randomize
         </button>

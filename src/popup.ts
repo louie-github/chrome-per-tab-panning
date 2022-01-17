@@ -7,11 +7,17 @@ const inputEvent = new Event("input");
 
 const volumeContainer: HTMLDivElement =
   document.querySelector(".slider-container");
+const sliderContainer: HTMLDivElement =
+  document.querySelector(".display-row-main");
 const slider: HTMLInputElement = document.getElementById("slider-main");
+const textDisplayContainer: HTMLDivElement = document.querySelector(
+  ".display-row .text-display"
+);
 const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
 const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
 const resetBtn: HTMLButtonElement = document.getElementById("reset-button");
 
+// Tab communication
 async function getActiveTabPanValue() {
   const tabId = await getActiveTabId();
   const message: Message = { name: "get-tab-pan-value", tabId };
@@ -32,6 +38,7 @@ async function getActiveTabId() {
   return activeTab.id;
 }
 
+// popup utility functions
 function isLeftRight() {
   const value = parseInt(slider.value);
   if (value < 0) {
@@ -52,6 +59,9 @@ function resetSlider() {
   slider.value = "0";
   slider.dispatchEvent(inputEvent);
 }
+
+// Randomizer functionality
+function hideSliderAndDisplay() {}
 
 slider.addEventListener("input", () => {
   updateSliderDisplay();

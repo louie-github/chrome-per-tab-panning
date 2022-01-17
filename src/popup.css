@@ -97,11 +97,17 @@ input[type="range"]::-webkit-slider-thumb {
   align-items: center;
 }
 
-.display-row-main {
+.display-row div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.display-row.main-row {
   justify-content: flex-start;
 }
 
-.display-row-text-display {
+.display-row.text-display {
   width: calc(100% - 0.5em);
   justify-content: flex-start;
 }
@@ -111,24 +117,24 @@ input[type="range"]::-webkit-slider-thumb {
   color: var(--fg-color, white);
 }
 
-.display-row-randomizer {
+.display-row.randomizer {
   justify-content: flex-start;
   margin-top: 0.9em;
 }
 
-.display-row-randomizer > button {
+.display-row.randomizer > button {
   font-size: 1.15em;
   font-weight: normal;
 
   margin-right: 1em;
 }
 
-.display-row-randomizer > .randomizer-choice {
+.display-row.randomizer > .randomizer-choice {
   font-weight: bold;
   background-color: var(--color-blue-slight-lighter);
 }
 
-.display-row-randomizer > .randomizer-choice:active {
+.display-row.randomizer > .randomizer-choice:active {
   background-color: var(--color-blue-darker);
 }
 
@@ -140,11 +146,11 @@ input[type="range"]::-webkit-slider-thumb {
   width: 5.25em;
 }
 
+#slider-value {
+  margin-right: 0.25em;
+}
+
 #reset-button {
   position: absolute;
   right: 0;
-}
-
-#slider-value {
-  margin-right: 0.25em;
 }
