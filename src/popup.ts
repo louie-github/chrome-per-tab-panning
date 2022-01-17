@@ -17,6 +17,15 @@ const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
 const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
 const resetBtn: HTMLButtonElement = document.getElementById("reset-button");
 
+const randomizeBtn: HTMLButtonElement =
+  document.getElementById("randomizer-button");
+const randomizerLeftBtn: HTMLButtonElement =
+  document.getElementById("randomizer-left");
+const randomizerNoneBtn: HTMLButtonElement =
+  document.getElementById("randomizer-none");
+const randomizerRightBtn: HTMLButtonElement =
+  document.getElementById("randomizer-right");
+
 // Tab communication
 async function getActiveTabPanValue() {
   const tabId = await getActiveTabId();
@@ -61,18 +70,49 @@ function resetSlider() {
 }
 
 // Randomizer functionality
-function hideSliderAndDisplay() {}
+function toggleSliderAndDisplay(flag: boolean) {
+  if (flag) {
+    sliderContainer.style.opacity = "100%";
+    textDisplayContainer.style.opacity = "100%";
+  } else {
+    sliderContainer.style.opacity = "0%";
+    textDisplayContainer.style.opacity = "0%";
+  }
+}
 
-slider.addEventListener("input", () => {
+async function randomizePanning() {
+  // Generate a random number from 0 to 2
+  const randValue = Math.floor(Math.random() * 3);
+  let ret: string;
+  switch (randValue) {
+    case 0:
+      await setActiveTabPanValue(-1);
+      ret = "LEFT";
+      break;
+    case 1: // RIGHT
+      await setActiveTabPanValue(1);
+      ret = "RIGHT";
+      break;
+    default:
+      await setActiveTabPanValue(0);
+      ret = "NONE";
+      break;
+  }
+  return ret;
+}
+
+slider.addEventListener("input", async () => {
   updateSliderDisplay();
-  setActiveTabPanValue(parseInt(slider.value) / 100);
+  await setActiveTabPanValue(parseInt(slider.value) / 100);
 });
 
 slider.addEventListener("dblclick", resetSlider);
 resetBtn.addEventListener("click", resetSlider);
 
+randomizeBtn.addEventListener("click", randomizePanning);
+
 void (async () => {
-  // Hide the slider until we know the initial volume
+  // Hide the slider until we know the initial pan value
   volumeContainer.style.opacity = "0";
 
   const initialValue: number = await getActiveTabPanValue();
