@@ -1,19 +1,23 @@
 :root {
   --fg-color: white;
   --bg-color: hsl(213, 28%, 15%);
-  --color-1: hsl(234, 72%, 61%);
-  --color-1-darker: hsl(234, 46%, 40%);
+  --color-blue: hsl(234, 85%, 63%);
+  --color-blue-slight-lighter: hsl(234, 80%, 69%);
+  --color-blue-lighter: hsl(234, 86%, 78%);
+  --color-blue-darker: hsl(234, 46%, 40%);
+  --color-blue-desaturated: hsl(234, 10%, 70%);
+  --color-gray: hsl(0, 1%, 84%);
+  --color-gray-dark: hsl(0, 0%, 69%);
 }
 
 html {
-  height: 4em;
   width: 15em;
 }
 
 body {
   width: 100%;
-  height: 100%;
   margin: 0;
+  padding: 0.7em 0;
 
   display: flex;
   justify-content: center;
@@ -23,7 +27,6 @@ body {
 
 .display-container {
   width: 85%;
-  height: 100%;
   margin: 0.35em 0.5em;
 
   display: flex;
@@ -34,6 +37,7 @@ body {
 
 .display-row {
   position: relative;
+  height: 1.65em;
   width: 100%;
 
   margin: 0.25em 0;
@@ -49,24 +53,52 @@ body {
 }
 
 button {
-  padding: 0.15em 0.4em;
+  padding: 0.15em 0.5em;
 
-  background-color: var(--color-1);
+  background-color: var(--color-blue);
   border: none;
   border-radius: 0.25em;
 
-  font-size: 1.2em;
+  font-size: 1.25em;
   font-weight: bold;
   color: var(--fg-color);
 }
 
 button:active {
-  background-color: var(--color-1-darker);
+  background-color: var(--color-blue-darker);
+}
+
+/* Why must it be so hard to style an HTML5 input range? I even need
+   JavaScript. */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+
+  height: 0.6em;
+  border-radius: 1em;
+
+  background: linear-gradient(
+    to right,
+    var(--color-blue) 0%,
+    var(--color-blue) 50%,
+    var(--color-blue-desaturated) 50%,
+    var(--color-blue-desaturated) 100%
+  );
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 1.1em;
+  height: 1.1em;
+  box-shadow ;
+  border-radius: 1em;
+  background-color: var(--color-blue-slight-lighter);
 }
 
 #slider-main {
-  width: calc(100% - 2.5em);
-  color: var(--color-1);
+  width: calc(100% - 3em);
 }
 
 #reset-button {

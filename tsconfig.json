@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "ES2018",
     "rootDir": "src",
     "outDir": "dist",
-    "lib": ["es2018", "dom"],
+    "lib": ["ES2018", "DOM", "DOM.Iterable"],
     "esModuleInterop": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
