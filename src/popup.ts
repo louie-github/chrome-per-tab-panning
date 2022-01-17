@@ -7,11 +7,12 @@ const inputEvent = new Event("input");
 
 const volumeContainer: HTMLDivElement =
   document.querySelector(".slider-container");
-const sliderContainer: HTMLDivElement =
-  document.querySelector(".display-row-main");
+const sliderContainer: HTMLDivElement = document.querySelector(
+  ".display-row.main-row"
+);
 const slider: HTMLInputElement = document.getElementById("slider-main");
 const textDisplayContainer: HTMLDivElement = document.querySelector(
-  ".display-row .text-display"
+  ".display-row.text-display"
 );
 const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
 const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
@@ -33,9 +34,17 @@ async function getActiveTabPanValue() {
   return await chrome.runtime.sendMessage(message);
 }
 
-async function setActiveTabPanValue(value: number) {
+async function setActiveTabPanValue(
+  value: number,
+  clearBadge: boolean = false
+) {
   const tabId = await getActiveTabId();
-  const message: Message = { name: "set-tab-pan-value", tabId, value };
+  let message: Message;
+  if (clearBadge) {
+    message = { name: "set-tab-pan-value-clear-badge", tabId, value };
+  } else {
+    message = { name: "set-tab-pan-value", tabId, value };
+  }
   return await chrome.runtime.sendMessage(message);
 }
 
@@ -71,13 +80,13 @@ function resetSlider() {
 
 // Randomizer functionality
 function toggleSliderAndDisplay(flag: boolean) {
-  if (flag) {
-    sliderContainer.style.opacity = "100%";
-    textDisplayContainer.style.opacity = "100%";
-  } else {
-    sliderContainer.style.opacity = "0%";
-    textDisplayContainer.style.opacity = "0%";
+  // Toggle if flag is unspecified
+  if (flag === undefined) {
+    flag = sliderContainer.style.opacity === "0";
   }
+  const opacityValue = flag ? "1" : "0";
+  slider.style.opacity = opacityValue;
+  textDisplayContainer.style.opacity = opacityValue;
 }
 
 async function randomizePanning() {
@@ -86,15 +95,15 @@ async function randomizePanning() {
   let ret: string;
   switch (randValue) {
     case 0:
-      await setActiveTabPanValue(-1);
+      await setActiveTabPanValue(-1, true);
       ret = "LEFT";
       break;
     case 1: // RIGHT
-      await setActiveTabPanValue(1);
+      await setActiveTabPanValue(1, true);
       ret = "RIGHT";
       break;
     default:
-      await setActiveTabPanValue(0);
+      await setActiveTabPanValue(0, true);
       ret = "NONE";
       break;
   }
@@ -107,9 +116,15 @@ slider.addEventListener("input", async () => {
 });
 
 slider.addEventListener("dblclick", resetSlider);
-resetBtn.addEventListener("click", resetSlider);
+resetBtn.addEventListener("click", () => {
+  resetSlider();
+  toggleSliderAndDisplay(true);
+});
 
-randomizeBtn.addEventListener("click", randomizePanning);
+randomizeBtn.addEventListener("click", async () => {
+  toggleSliderAndDisplay(false);
+  await randomizePanning();
+});
 
 void (async () => {
   // Hide the slider until we know the initial pan value

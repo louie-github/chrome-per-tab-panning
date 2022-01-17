@@ -53,17 +53,26 @@ async function getTabPanValue(tabId: number) {
 
 /**
  * Sets a tab's pan value. Captures the tab if it wasn't captured.
- * @param tabId Tab ID
- * @param value Pan value. `0` means disabled, `-1` is 100% left,
- *              `1` is 100% right, `0.5` is 50% right, etc.
+ * @param tabId - Tab ID
+ * @param value - Pan value. `0` means disabled, `-1` is 100% left, `1` is 100% right, `0.5` is 50% right, etc.
+ * @param [clearBadge=false] - Whether to clear the tab badge instead of updating it.
  */
-async function setTabPanValue(tabId: number, value: number) {
+async function setTabPanValue(
+  tabId: number,
+  value: number,
+  clearBadge: boolean = false
+) {
   if (!(tabId in tabs)) {
     captureTab(tabId);
   }
 
   (await tabs[tabId]).stereoPannerNode.pan.value = value;
-  updateBadge(tabId, value);
+
+  if (clearBadge) {
+    updateBadge(tabId, 0);
+  } else {
+    updateBadge(tabId, value);
+  }
 }
 
 /**
@@ -102,13 +111,16 @@ async function disposeTab(tabId: number) {
 // Handle messages from popup
 chrome.runtime.onMessage.addListener(
   async (message: Message, sender, sendResponse) => {
+    let clearBadge = false;
     switch (message.name) {
       case "get-tab-pan-value":
         sendResponse(await getTabPanValue(message.tabId));
         break;
+      case "set-tab-pan-value-clear-badge":
+        clearBadge = true;
       case "set-tab-pan-value":
         sendResponse(undefined); // Nothing to send here.
-        await setTabPanValue(message.tabId, message.value);
+        await setTabPanValue(message.tabId, message.value, clearBadge);
         break;
       default:
         throw Error(`Unknown message received: ${message}`);
