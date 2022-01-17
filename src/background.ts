@@ -5,26 +5,6 @@ import Message from "./interfaces/Message";
 
 const initialValue = 0;
 
-// Handle messages from popup
-chrome.runtime.onMessage.addListener(
-  async (message: Message, sender, sendResponse) => {
-    switch (message.name) {
-      case "get-tab-pan-value":
-        sendResponse(await getTabPanValue(message.tabId));
-        break;
-      case "set-tab-pan-value":
-        sendResponse(undefined); // Nothing to send here.
-        await setTabPanValue(message.tabId, message.value);
-        break;
-      default:
-        throw Error(`Unknown message received: ${message}`);
-    }
-  }
-);
-
-// Clean everything up once the tab is closed
-chrome.tabs.onRemoved.addListener(disposeTab);
-
 interface CapturedTab {
   audioContext: AudioContext;
   // While we will never use `streamSource` property in the code,
@@ -118,3 +98,23 @@ async function disposeTab(tabId: number) {
     delete tabs[tabId];
   }
 }
+
+// Handle messages from popup
+chrome.runtime.onMessage.addListener(
+  async (message: Message, sender, sendResponse) => {
+    switch (message.name) {
+      case "get-tab-pan-value":
+        sendResponse(await getTabPanValue(message.tabId));
+        break;
+      case "set-tab-pan-value":
+        sendResponse(undefined); // Nothing to send here.
+        await setTabPanValue(message.tabId, message.value);
+        break;
+      default:
+        throw Error(`Unknown message received: ${message}`);
+    }
+  }
+);
+
+// Clean everything up once the tab is closed
+chrome.tabs.onRemoved.addListener(disposeTab);

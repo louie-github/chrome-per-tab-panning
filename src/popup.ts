@@ -12,16 +12,25 @@ const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
 const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
 const resetBtn: HTMLButtonElement = document.getElementById("reset-button");
 
-void (async () => {
-  // Hide the slider until we know the initial volume
-  volumeContainer.style.opacity = "0";
+async function getActiveTabPanValue() {
+  const tabId = await getActiveTabId();
+  const message: Message = { name: "get-tab-pan-value", tabId };
+  return await chrome.runtime.sendMessage(message);
+}
 
-  const initialValue: number = await getActiveTabPanValue();
-  slider.value = (initialValue * 100).toString();
-  updateSliderDisplay();
+async function setActiveTabPanValue(value: number) {
+  const tabId = await getActiveTabId();
+  const message: Message = { name: "set-tab-pan-value", tabId, value };
+  return await chrome.runtime.sendMessage(message);
+}
 
-  volumeContainer.style.opacity = "1";
-})();
+async function getActiveTabId() {
+  const [activeTab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  return activeTab.id;
+}
 
 function isLeftRight() {
   const value = parseInt(slider.value);
@@ -52,22 +61,13 @@ slider.addEventListener("input", () => {
 slider.addEventListener("dblclick", resetSlider);
 resetBtn.addEventListener("click", resetSlider);
 
-async function getActiveTabPanValue() {
-  const tabId = await getActiveTabId();
-  const message: Message = { name: "get-tab-pan-value", tabId };
-  return await chrome.runtime.sendMessage(message);
-}
+void (async () => {
+  // Hide the slider until we know the initial volume
+  volumeContainer.style.opacity = "0";
 
-async function setActiveTabPanValue(value: number) {
-  const tabId = await getActiveTabId();
-  const message: Message = { name: "set-tab-pan-value", tabId, value };
-  return await chrome.runtime.sendMessage(message);
-}
+  const initialValue: number = await getActiveTabPanValue();
+  slider.value = (initialValue * 100).toString();
+  updateSliderDisplay();
 
-async function getActiveTabId() {
-  const [activeTab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
-  return activeTab.id;
-}
+  volumeContainer.style.opacity = "1";
+})();
