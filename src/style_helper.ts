@@ -1,3 +1,5 @@
+import { colorSliderLeft, colorSliderRight } from "./exports.module.scss";
+
 function getPercentPosition(slider: HTMLInputElement) {
   const min = parseInt(slider.min);
   const max = parseInt(slider.max);
@@ -11,10 +13,10 @@ for (const slider of document.querySelectorAll('input[type="range"]')) {
     slider.style.background = `
         linear-gradient(
             to right,
-            var(--color-blue) 0%,
-            var(--color-blue) ${percentage}%,
-            var(--color-blue-desaturated) ${percentage}%,
-            var(--color-blue-desaturated) 100%
+            ${colorSliderLeft} 0%,
+            ${colorSliderLeft} ${percentage}%,
+            ${colorSliderRight} ${percentage}%,
+            ${colorSliderRight} 100%
         )
         `;
   });

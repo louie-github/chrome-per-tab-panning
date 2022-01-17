@@ -7,6 +7,10 @@ $color-blue-darker: hsl(234, 46%, 40%);
 $color-blue-desaturated: hsl(234, 10%, 70%);
 $color-gray: hsl(0, 1%, 84%);
 $color-gray-dark: hsl(0, 0%, 69%);
+
+$color-slider-left: $color-blue;
+$color-slider-right: $color-blue-desaturated;
+
 $ui-font: "Inter", "Roboto", sans-serif;
 
 @mixin flexbox {
@@ -48,8 +52,10 @@ button:active {
   background-color: $color-blue-darker;
 }
 
-/* Why must it be so hard to style an HTML5 input range? I even need
-   JavaScript. */
+// Why must it be so hard to style an HTML5 input range? I even need
+// JavaScript to make things "simpler". And *that* requires that I set
+// up an entire system (see exports.module.scss) to export the variables
+// from SCSS to JavaScript. Argh!
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -59,10 +65,10 @@ input[type="range"] {
 
   background: linear-gradient(
     to right,
-    $color-blue 0%,
-    $color-blue 50%,
-    $color-blue-desaturated 50%,
-    $color-blue-desaturated 100%
+    $color-slider-left 0%,
+    $color-slider-left 50%,
+    $color-slider-right 50%,
+    $color-slider-right 100%
   );
 }
 

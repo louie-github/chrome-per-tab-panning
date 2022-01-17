@@ -1,0 +1,15 @@
+// Thanks: https://stackoverflow.com/a/57538082
+// I have to export SCSS variables through a separate scss file so I
+// can reference the original in the HTML markup while also exposing
+// variables to JavaScript through here.
+
+@import "popup";
+
+// This seems rather hard to find in the css-modules documentation;
+// you have to look through icss (https://github.com/css-modules/icss),
+// the low-level file format, to explain what :export does.
+// Anyway, this exports CSS values as variables for JS interoperability.
+:export {
+  colorSliderLeft: $color-slider-left;
+  colorSliderRight: $color-slider-right;
+}
