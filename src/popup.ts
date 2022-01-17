@@ -6,7 +6,7 @@ import Message from "./interfaces/Message";
 const inputEvent = new Event("input");
 
 const volumeContainer: HTMLDivElement =
-  document.querySelector(".slider-container");
+  document.querySelector(".display-container");
 const sliderContainer: HTMLDivElement = document.querySelector(
   ".display-row.main-row"
 );
@@ -98,7 +98,7 @@ async function randomizePanning() {
       await setActiveTabPanValue(-1, true);
       ret = "LEFT";
       break;
-    case 1: // RIGHT
+    case 1:
       await setActiveTabPanValue(1, true);
       ret = "RIGHT";
       break;
@@ -132,7 +132,7 @@ void (async () => {
 
   const initialValue: number = await getActiveTabPanValue();
   slider.value = (initialValue * 100).toString();
-  updateSliderDisplay();
+  slider.dispatchEvent(inputEvent);
 
   volumeContainer.style.opacity = "1";
 })();
