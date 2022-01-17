@@ -8,6 +8,8 @@
   --color-blue-desaturated: hsl(234, 10%, 70%);
   --color-gray: hsl(0, 1%, 84%);
   --color-gray-dark: hsl(0, 0%, 69%);
+
+  --ui-font: "Inter", "Roboto", sans-serif;
 }
 
 html {
@@ -32,7 +34,7 @@ button {
   border: none;
   border-radius: 0.25em;
 
-  font-family: Inter;
+  font-family: var(--ui-font);
   font-size: 1.25em;
   font-weight: bold;
   color: var(--fg-color);
@@ -79,7 +81,7 @@ input[type="range"]::-webkit-slider-thumb {
   justify-content: center;
   align-items: center;
 
-  font-family: Inter;
+  font-family: var(--ui-font);
 }
 
 .display-row {
