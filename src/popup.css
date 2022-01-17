@@ -101,6 +101,16 @@ input[type="range"]::-webkit-slider-thumb {
   justify-content: flex-start;
 }
 
+.display-row-text-display {
+  width: calc(100% - 0.5em);
+  justify-content: flex-start;
+}
+
+.slider-text {
+  font-size: 1.15em;
+  color: var(--fg-color, white);
+}
+
 .display-row-randomizer {
   justify-content: flex-start;
   margin-top: 0.9em;
@@ -120,16 +130,6 @@ input[type="range"]::-webkit-slider-thumb {
 
 .display-row-randomizer > .randomizer-choice:active {
   background-color: var(--color-blue-darker);
-}
-
-.slider-display-container {
-  width: calc(100% - 0.5em);
-  justify-content: flex-start;
-}
-
-.slider-text {
-  font-size: 1.15em;
-  color: var(--fg-color, white);
 }
 
 #slider-main {
