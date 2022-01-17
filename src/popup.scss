@@ -1,15 +1,19 @@
-:root {
-  --fg-color: white;
-  --bg-color: hsl(213, 28%, 15%);
-  --color-blue: hsl(234, 85%, 63%);
-  --color-blue-slight-lighter: hsl(234, 80%, 69%);
-  --color-blue-lighter: hsl(234, 86%, 78%);
-  --color-blue-darker: hsl(234, 46%, 40%);
-  --color-blue-desaturated: hsl(234, 10%, 70%);
-  --color-gray: hsl(0, 1%, 84%);
-  --color-gray-dark: hsl(0, 0%, 69%);
+$fg-color: white;
+$bg-color: hsl(213, 28%, 15%);
+$color-blue: hsl(234, 85%, 63%);
+$color-blue-slight-lighter: hsl(234, 80%, 69%);
+$color-blue-lighter: hsl(234, 86%, 78%);
+$color-blue-darker: hsl(234, 46%, 40%);
+$color-blue-desaturated: hsl(234, 10%, 70%);
+$color-gray: hsl(0, 1%, 84%);
+$color-gray-dark: hsl(0, 0%, 69%);
+$ui-font: "Inter", "Roboto", sans-serif;
 
-  --ui-font: "Inter", "Roboto", sans-serif;
+@mixin flexbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 html {
@@ -21,27 +25,27 @@ body {
   margin: 0;
   padding: 0.7em 0;
 
-  display: flex;
+  @include flexbox();
   justify-content: center;
-  align-items: center;
-  background: var(--bg-color, black);
+
+  background: $bg-color;
 }
 
 button {
   padding: 0.15em 0.5em;
 
-  background-color: var(--color-blue);
+  background-color: $color-blue;
   border: none;
   border-radius: 0.25em;
 
-  font-family: var(--ui-font);
+  font-family: $ui-font;
   font-size: 1.25em;
   font-weight: bold;
-  color: var(--fg-color);
+  color: $fg-color;
 }
 
 button:active {
-  background-color: var(--color-blue-darker);
+  background-color: $color-blue-darker;
 }
 
 /* Why must it be so hard to style an HTML5 input range? I even need
@@ -55,10 +59,10 @@ input[type="range"] {
 
   background: linear-gradient(
     to right,
-    var(--color-blue) 0%,
-    var(--color-blue) 50%,
-    var(--color-blue-desaturated) 50%,
-    var(--color-blue-desaturated) 100%
+    $color-blue 0%,
+    $color-blue 50%,
+    $color-blue-desaturated 50%,
+    $color-blue-desaturated 100%
   );
 }
 
@@ -69,19 +73,17 @@ input[type="range"]::-webkit-slider-thumb {
   width: 1.1em;
   height: 1.1em;
   border-radius: 1em;
-  background-color: var(--color-blue-slight-lighter);
+  background-color: $color-blue-slight-lighter;
 }
 
 .display-container {
   width: 85%;
   margin: 0.35em 0.5em;
 
-  display: flex;
+  @include flexbox();
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
-  font-family: var(--ui-font);
+  font-family: $ui-font;
 }
 
 .display-row {
@@ -91,45 +93,38 @@ input[type="range"]::-webkit-slider-thumb {
 
   margin: 0.25em 0;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
+  @include flexbox();
 
-.display-row-main {
-  justify-content: flex-start;
-}
+  div {
+    @include flexbox();
+  }
 
-.display-row-text-display {
-  width: calc(100% - 0.5em);
-  justify-content: flex-start;
-}
+  &.text-display {
+    width: calc(100% - 0.5em);
 
-.slider-text {
-  font-size: 1.15em;
-  color: var(--fg-color, white);
-}
+    .slider-text {
+      font-size: 1.15em;
+      color: $fg-color;
+    }
+  }
 
-.display-row-randomizer {
-  justify-content: flex-start;
-  margin-top: 0.9em;
-}
+  &.randomizer {
+    margin-top: 0.9em;
 
-.display-row-randomizer > button {
-  font-size: 1.15em;
-  font-weight: normal;
+    button {
+      margin-right: 1em;
+      font-size: 1.15em;
+      font-weight: normal;
+    }
 
-  margin-right: 1em;
-}
-
-.display-row-randomizer > .randomizer-choice {
-  font-weight: bold;
-  background-color: var(--color-blue-slight-lighter);
-}
-
-.display-row-randomizer > .randomizer-choice:active {
-  background-color: var(--color-blue-darker);
+    .randomizer-choice {
+      font-weight: bold;
+      background-color: $color-blue-slight-lighter;
+      &:active {
+        background-color: $color-blue-darker;
+      }
+    }
+  }
 }
 
 #slider-main {
@@ -140,11 +135,11 @@ input[type="range"]::-webkit-slider-thumb {
   width: 5.25em;
 }
 
+#slider-value {
+  margin-right: 0.25em;
+}
+
 #reset-button {
   position: absolute;
   right: 0;
-}
-
-#slider-value {
-  margin-right: 0.25em;
 }
