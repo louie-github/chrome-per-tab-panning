@@ -10,8 +10,18 @@
 
 # Credits
 Thanks to [piousdeer](https://github.com/piousdeer/chrome-volume-manager)
-for nearly all of the code written in this repository. Only minor
-changes have been made.
+for nearly all of the actual extension code written in this repository.
+Only minor changes have been made.
+
+This extension includes some icons from Google's
+[Material Design Icons](https://github.com/google/material-design-icons),
+licensed under the [Apache License 2.0](static/icons/Material_Icons.LICENSE),
+and some icons from the [Ionicons](https://ionic.io/ionicons) icon set,
+licensed under the [MIT License](static/icons/Ionicons.LICENSE)
+
+The [extension logo](static/icons/logo_512.png) is a derivative work of
+some Ionicons icons, and is also licensed under the same
+[MIT License](static/icons/logo.LICENSE).
 
 # Usage
 This extension is not published in the Chrome Web Store as it is in
