@@ -106,8 +106,18 @@ input[type="range"]::-webkit-slider-thumb {
 .display-row-randomizer > button {
   font-size: 1.15em;
   font-weight: normal;
+
+  margin-right: 1em;
 }
 
+.display-row-randomizer > .randomizer-choice {
+  font-weight: bold;
+  background-color: var(--color-blue-slight-lighter);
+}
+
+.display-row-randomizer > .randomizer-choice:active {
+  background-color: var(--color-blue-darker);
+}
 
 #slider-main {
   width: calc(100% - 3em);
