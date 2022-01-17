@@ -46,7 +46,7 @@ function resetSlider() {
 
 slider.addEventListener("input", () => {
   updateSliderDisplay();
-  setActiveTabVolume(parseInt(slider.value) / 100);
+  setActiveTabPanValue(parseInt(slider.value) / 100);
 });
 
 slider.addEventListener("dblclick", resetSlider);
@@ -58,7 +58,7 @@ async function getActiveTabPanValue() {
   return await chrome.runtime.sendMessage(message);
 }
 
-async function setActiveTabVolume(value: number) {
+async function setActiveTabPanValue(value: number) {
   const tabId = await getActiveTabId();
   const message: Message = { name: "set-tab-pan-value", tabId, value };
   return await chrome.runtime.sendMessage(message);
