@@ -97,11 +97,11 @@ async function updateBadge(tabId: number, value: number) {
     const valuePercentage = Math.round(Math.abs(value) * 100);
     let text;
     if (value < 0) {
-      text = `L ${valuePercentage}%`;
+      text = `L ${valuePercentage}`;
     } else if (value > 0) {
-      text = `R ${valuePercentage}%`;
+      text = `R ${valuePercentage}`;
     } else {
-      text = "OFF";
+      text = "";
     }
     chrome.browserAction.setBadgeText({ text, tabId });
   }
