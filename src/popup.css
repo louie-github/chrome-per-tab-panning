@@ -25,6 +25,18 @@ body {
   background: var(--bg-color, black);
 }
 
+button {
+  padding: 0.15em 0.5em;
+
+  background-color: var(--color-blue);
+  border: none;
+  border-radius: 0.25em;
+
+  font-size: 1.25em;
+  font-weight: bold;
+  color: var(--fg-color);
+}
+
 button:active {
   background-color: var(--color-blue-darker);
 }
@@ -59,7 +71,6 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 
-
 .display-container {
   width: 85%;
   margin: 0.35em 0.5em;
@@ -72,7 +83,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .display-row {
   position: relative;
-  height: 1.65em;
+  height: 1.5em;
   width: 100%;
 
   margin: 0.25em 0;
@@ -87,17 +98,16 @@ input[type="range"]::-webkit-slider-thumb {
   justify-content: flex-start;
 }
 
-button {
-  padding: 0.15em 0.5em;
-
-  background-color: var(--color-blue);
-  border: none;
-  border-radius: 0.25em;
-
-  font-size: 1.25em;
-  font-weight: bold;
-  color: var(--fg-color);
+.display-row-randomizer {
+  justify-content: flex-start;
+  margin-top: 1em;
 }
+
+.display-row-randomizer > button {
+  font-size: 1.15em;
+  font-weight: normal;
+}
+
 
 #slider-main {
   width: calc(100% - 3em);
