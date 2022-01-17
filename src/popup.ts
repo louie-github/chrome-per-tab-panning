@@ -3,6 +3,8 @@ import "chrome-extension-async";
 
 import Message from "./interfaces/Message";
 
+const inputEvent = new Event("input");
+
 const volumeContainer: HTMLDivElement =
   document.querySelector(".slider-container");
 const slider: HTMLInputElement = document.getElementById("slider-main");
@@ -33,15 +35,13 @@ function isLeftRight() {
 }
 
 function updateSliderDisplay() {
-  slider.dispatchEvent(new Event("input"));
   lrSpan.textContent = isLeftRight();
   valueSpan.textContent = `${slider.value}%`;
 }
 
 function resetSlider() {
   slider.value = "0";
-  updateSliderDisplay();
-  setActiveTabVolume(0);
+  slider.dispatchEvent(inputEvent);
 }
 
 slider.addEventListener("input", () => {
