@@ -33,6 +33,7 @@ function isLeftRight() {
 }
 
 function updateSliderDisplay() {
+  slider.dispatchEvent(new Event("input"));
   lrSpan.textContent = isLeftRight();
   valueSpan.textContent = `${slider.value}%`;
 }
