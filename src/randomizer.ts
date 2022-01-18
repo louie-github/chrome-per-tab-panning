@@ -70,7 +70,8 @@ const scoreObject = {
 };
 
 function updateScorePercentage() {
-  const percentage = Math.round((scoreObject.score / scoreObject.total) * 100);
+  let percentage = Math.round((scoreObject.score / scoreObject.total) * 100);
+  if (isNaN(percentage)) percentage = 0;
   scoreObject.percentageSpan.textContent = `${percentage}%`;
 }
 
@@ -140,6 +141,9 @@ randomizer.randomizeBtn.addEventListener("click", async () => {
 scoreObject.resetBtn.addEventListener("click", async () => {
   isCurrentlyChoosing = false;
   hideSliderAndDisplay(false);
+  scoreObject.score = 0;
+  scoreObject.total = 0;
+  updateScorePercentage();
   resetButtons();
   await setActiveTabPanValueClearBadge(0);
 });
