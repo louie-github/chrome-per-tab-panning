@@ -6,6 +6,7 @@ import Message from "./interfaces/Message";
 const initialValue = 0;
 
 interface CapturedTab {
+  mediaStream: MediaStream;
   audioContext: AudioContext;
   // While we will never use `streamSource` property in the code,
   // it is necessary to keep a reference to it, or else
@@ -25,19 +26,19 @@ const tabs: { [tabId: number]: Promise<CapturedTab> } = {};
  */
 function captureTab(tabId: number) {
   tabs[tabId] = new Promise(async (resolve) => {
-    const stream = await chrome.tabCapture.capture({
+    const mediaStream = await chrome.tabCapture.capture({
       audio: true,
       video: false,
     });
 
     const audioContext = new AudioContext();
-    const streamSource = audioContext.createMediaStreamSource(stream);
+    const streamSource = audioContext.createMediaStreamSource(mediaStream);
     const stereoPannerNode = audioContext.createStereoPanner();
 
     streamSource.connect(stereoPannerNode);
     stereoPannerNode.connect(audioContext.destination);
 
-    resolve({ audioContext, streamSource, stereoPannerNode: stereoPannerNode });
+    resolve({ mediaStream, audioContext, streamSource, stereoPannerNode });
   });
 }
 
@@ -103,7 +104,12 @@ async function updateBadge(tabId: number, value: number) {
  */
 async function disposeTab(tabId: number) {
   if (tabId in tabs) {
-    (await tabs[tabId]).audioContext.close();
+    console.log(`Disposing tab: ${tabId}`);
+    const tab = await tabs[tabId];
+    tab.audioContext.close();
+    tab.mediaStream.getTracks().forEach((track) => {
+      track.stop();
+    });
     delete tabs[tabId];
   }
 }
@@ -121,6 +127,9 @@ chrome.runtime.onMessage.addListener(
       case "set-tab-pan-value":
         sendResponse(undefined); // Nothing to send here.
         await setTabPanValue(message.tabId, message.value, clearBadge);
+        break;
+      case "reset-tab":
+        disposeTab(message.tabId);
         break;
       default:
         throw Error(`Unknown message received: ${message}`);

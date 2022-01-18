@@ -1,6 +1,8 @@
 /// <reference path="../node_modules/chrome-extension-async/chrome-extension-async.d.ts" />
 import "chrome-extension-async";
 
+import Message from "./interfaces/Message";
+
 export {
   // Functions
   getActiveTabId,
@@ -18,7 +20,7 @@ export {
   isLeftRight,
   updateSliderDisplay,
   hideSliderAndDisplay,
-  resetSlider,
+  resetPanValue as resetSlider,
 };
 
 const inputEvent = new Event("input");
@@ -55,8 +57,13 @@ async function getActiveTabPanValue() {
 
 async function setActiveTabPanValue(value: number) {
   const tabId = await getActiveTabId();
-  let message: Message;
-  message = { name: "set-tab-pan-value", tabId, value };
+  const message: Message = { name: "set-tab-pan-value", tabId, value };
+  return await chrome.runtime.sendMessage(message);
+}
+
+async function resetTab() {
+  const tabId = await getActiveTabId();
+  const message: Message = { name: "reset-tab", tabId };
   return await chrome.runtime.sendMessage(message);
 }
 
@@ -83,9 +90,10 @@ function hideSliderAndDisplay(flag: boolean) {
   sliderDisplayContainer.style.opacity = opacityValue;
 }
 
-function resetSlider() {
+function resetPanValue() {
   slider.value = "0";
   slider.dispatchEvent(inputEvent);
+  resetTab();
 }
 
 slider.addEventListener("input", async () => {
@@ -93,9 +101,9 @@ slider.addEventListener("input", async () => {
   await setActiveTabPanValue(parseInt(slider.value) / 100);
 });
 
-slider.addEventListener("dblclick", resetSlider);
+slider.addEventListener("dblclick", resetPanValue);
 resetBtn.addEventListener("click", () => {
-  resetSlider();
+  resetPanValue();
   slider.style.opacity = "1";
   sliderDisplayContainer.style.opacity = "1";
 });
