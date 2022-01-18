@@ -1,9 +1,8 @@
 export const choice: string;
 export const choices: string;
-export const colorRandomizerCorrect: string;
-export const colorRandomizerWrong: string;
 export const colorSliderLeft: string;
 export const colorSliderRight: string;
+export const correct: string;
 export const displayContainer: string;
 export const displayRow: string;
 export const mainRow: string;
@@ -17,3 +16,4 @@ export const sliderDisplay: string;
 export const sliderMain: string;
 export const sliderValue: string;
 export const sliderValuePrefix: string;
+export const wrong: string;
