@@ -5,8 +5,10 @@
 
 * Click on the extension icon and drag the slider to adjust the panning
   of the active tab.
-* [functionality to be implemented]
 * The current panning setting is displayed as a badge next to the icon.
+* Click "Randomize" to randomly select either full left, full right, or
+  no panning. Try to guess which one is selected using the buttons on
+  the right. Your score is displayed below.
 
 # Credits
 Thanks to [piousdeer](https://github.com/piousdeer/chrome-volume-manager)
