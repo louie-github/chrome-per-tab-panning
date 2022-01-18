@@ -1,6 +1,10 @@
 import Message from "./interfaces/Message";
 
 import { getActiveTabId, hideSliderAndDisplay } from "./popup";
+import {
+  colorRandomizerCorrect,
+  colorRandomizerWrong,
+} from "./exports.module.scss";
 
 const randomizeBtn: HTMLButtonElement =
   document.getElementById("randomizer-button");
@@ -11,7 +15,31 @@ const randomizerNoneBtn: HTMLButtonElement =
 const randomizerRightBtn: HTMLButtonElement =
   document.getElementById("randomizer-right");
 
-// Randomizer functionality
+let currentPanValue;
+
+const scoreObject = {
+  scoreSpan: document.querySelector(".score-container .score"),
+  totalSpan: document.querySelector(".score-container .total"),
+  percentageSpan: document.querySelector(".score-container .percentage"),
+  get score() {
+    return parseInt(this.scoreSpan.textContent);
+  },
+  set score(value: number) {
+    this.scoreSpan.textContent = value.toString();
+  },
+  get total() {
+    return parseInt(this.totalSpan.textContent);
+  },
+  set total(value: number) {
+    this.totalSpan.textContent = value.toString();
+  },
+};
+
+function updateScorePercentage() {
+  const percentage = Math.round((scoreObject.score / scoreObject.total) * 100);
+  scoreObject.percentageSpan.textContent = `${percentage}%`;
+}
+
 async function setActiveTabPanValueClearBadge(value: number) {
   const tabId = await getActiveTabId();
   let message: Message;
@@ -42,5 +70,5 @@ async function randomizePanning() {
 
 randomizeBtn.addEventListener("click", async () => {
   hideSliderAndDisplay(true);
-  await randomizePanning();
+  currentPanValue = await randomizePanning();
 });
