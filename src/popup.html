@@ -1,9 +1,5 @@
 <html>
   <head>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Inter"
-    />
     <link rel="stylesheet" href="./popup.scss" />
   </head>
 
@@ -11,9 +7,9 @@
     <main class="display-container">
       <div class="display-row main-row">
         <input type="range" id="slider-main" min="-100" max="100" value="0" />
-        <button id="reset-button">X</button>
+        <button class="reset-button">X</button>
       </div>
-      <div class="display-row text-display">
+      <div class="display-row text-display slider-display">
         <span class="slider-text" id="slider-value-prefix">Pan value: </span>
         <span class="slider-text" id="slider-value">0%</span>
         <div id="slider-lr-container">
@@ -29,13 +25,15 @@
         >
           Randomize
         </button>
-        <button class="choice" id="randomizer-left">L</button>
-        <button class="choice" id="randomizer-none">X</button>
-        <button class="choice" id="randomizer-right">R</button>
+        <div class="choices">
+          <button class="choice" id="randomizer-left">L</button>
+          <button class="choice" id="randomizer-none">X</button>
+          <button class="choice" id="randomizer-right">R</button>
+        </div>
       </div>
-      <div class="display-row randomizer-results">
-        <span class="score-prefix">Score:</span>
+      <div class="display-row text-display randomizer-results">
         <div class="score-container">
+          <span class="score-prefix">Score:</span>
           <span class="score">0</span>
           <span>/</span>
           <span class="total">0</span>
@@ -45,6 +43,7 @@
             <span>)</span>
           </div>
         </div>
+        <button class="reset-score">Reset</button>
       </div>
     </main>
 

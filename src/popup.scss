@@ -11,6 +11,8 @@ $color-gray-dark: hsl(0, 0%, 69%);
 $color-slider-left: $color-blue;
 $color-slider-right: $color-blue-desaturated;
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
 $ui-font: "Inter", "Roboto", sans-serif;
 
 @mixin flexbox {
@@ -48,7 +50,7 @@ button {
   border-radius: 0.25em;
 
   font-family: $ui-font;
-  font-size: 1.25em;
+  font-size: 1.15em;
   font-weight: bold;
   color: $fg-color;
 
@@ -98,7 +100,6 @@ input[type="range"] {
 }
 
 .display-row {
-  position: relative;
   height: 1.5em;
   width: 100%;
 
@@ -110,17 +111,30 @@ input[type="range"] {
     @include flexbox();
   }
 
-  &.text-display {
+  &.main-row {
+    justify-content: space-between;
+    .reset-button {
+      font-size: 1.25em;
+    }
+  }
+
+  &.slider-display {
     width: calc(100% - 0.5em);
   }
 
   &.randomizer {
+    justify-content: space-between;
     margin: 0.9em 0;
 
     button {
-      margin-right: 1em;
-      font-size: 1.15em;
       font-weight: normal;
+    }
+
+    .choices {
+      display: flex;
+      justify-content: space-between;
+
+      width: 7.5em;
     }
 
     .choice {
@@ -133,6 +147,7 @@ input[type="range"] {
   }
 
   &.randomizer-results {
+    justify-content: space-between;
     .score-prefix {
       margin-right: 0.35em;
     }
@@ -155,9 +170,4 @@ input[type="range"] {
 
 #slider-value {
   margin-right: 0.25em;
-}
-
-#reset-button {
-  position: absolute;
-  right: 0;
 }

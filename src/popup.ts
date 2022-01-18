@@ -10,7 +10,7 @@ export {
   volumeContainer,
   sliderContainer,
   slider,
-  textDisplayContainer,
+  sliderDisplayContainer as textDisplayContainer,
   valueSpan,
   lrSpan,
   resetBtn,
@@ -29,12 +29,14 @@ const sliderContainer: HTMLDivElement = document.querySelector(
   ".display-row.main-row"
 );
 const slider: HTMLInputElement = document.getElementById("slider-main");
-const textDisplayContainer: HTMLDivElement = document.querySelector(
-  ".display-row.text-display"
+const sliderDisplayContainer: HTMLDivElement = document.querySelector(
+  ".display-row.slider-display"
 );
 const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
 const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
-const resetBtn: HTMLButtonElement = document.getElementById("reset-button");
+const resetBtn: HTMLButtonElement = document.querySelector(
+  ".display-row.main-row .reset-button"
+);
 
 async function getActiveTabId() {
   const [activeTab] = await chrome.tabs.query({
@@ -78,7 +80,7 @@ function updateSliderDisplay() {
 function hideSliderAndDisplay(flag: boolean) {
   const opacityValue = flag ? "0" : "1";
   slider.style.opacity = opacityValue;
-  textDisplayContainer.style.opacity = opacityValue;
+  sliderDisplayContainer.style.opacity = opacityValue;
 }
 
 function resetSlider() {
@@ -95,7 +97,7 @@ slider.addEventListener("dblclick", resetSlider);
 resetBtn.addEventListener("click", () => {
   resetSlider();
   slider.style.opacity = "1";
-  textDisplayContainer.style.opacity = "1";
+  sliderDisplayContainer.style.opacity = "1";
 });
 
 void (async () => {
