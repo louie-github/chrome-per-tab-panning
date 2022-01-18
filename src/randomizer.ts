@@ -2,6 +2,12 @@ import Message from "./interfaces/Message";
 
 import { getActiveTabId, hideSliderAndDisplay } from "./popup";
 
+enum PanSetting {
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
+  NONE = "NONE",
+}
+
 const randomizer = {
   randomizeBtn: document.getElementById(
     "randomizer-button"
@@ -11,7 +17,33 @@ const randomizer = {
   rightBtn: document.getElementById("randomizer-right") as HTMLButtonElement,
 };
 
-let currentPanSetting;
+function buttonToSetting(btn: HTMLButtonElement) {
+  switch (btn) {
+    case randomizer.leftBtn:
+      return PanSetting.LEFT;
+    case randomizer.rightBtn:
+      return PanSetting.RIGHT;
+    case randomizer.noneBtn:
+      return PanSetting.NONE;
+    default:
+      return;
+  }
+}
+
+function settingToButton(setting: PanSetting) {
+  switch (setting) {
+    case PanSetting.LEFT:
+      return randomizer.leftBtn;
+    case PanSetting.RIGHT:
+      return randomizer.rightBtn;
+    case PanSetting.NONE:
+      return randomizer.noneBtn;
+    default:
+      return;
+  }
+}
+
+let currentPanSetting: PanSetting;
 let isCurrentlyChoosing = false;
 
 const scoreObject = {
@@ -52,22 +84,17 @@ async function setActiveTabPanValueClearBadge(value: number) {
 async function randomizePanning() {
   // Generate a random number from 0 to 2
   const randValue = Math.floor(Math.random() * 3);
-  let ret: string;
   switch (randValue) {
     case 0:
       await setActiveTabPanValueClearBadge(-1);
-      ret = "LEFT";
-      break;
+      return PanSetting.LEFT;
     case 1:
       await setActiveTabPanValueClearBadge(1);
-      ret = "RIGHT";
-      break;
+      return PanSetting.RIGHT;
     default:
       await setActiveTabPanValueClearBadge(0);
-      ret = "NONE";
-      break;
+      return PanSetting.NONE;
   }
-  return ret;
 }
 
 function markButtonCorrect(btn: HTMLButtonElement) {
@@ -79,19 +106,7 @@ function markButtonWrong(btn: HTMLButtonElement) {
 }
 
 function markCorrectButton() {
-  switch (currentPanSetting) {
-    case "LEFT":
-      markButtonCorrect(randomizer.leftBtn);
-      break;
-    case "RIGHT":
-      markButtonCorrect(randomizer.rightBtn);
-      break;
-    case "NONE":
-      markButtonCorrect(randomizer.noneBtn);
-      break;
-    default:
-      break;
-  }
+  markButtonCorrect(settingToButton(currentPanSetting));
 }
 
 function resetButtons() {
@@ -103,20 +118,15 @@ function resetButtons() {
 function handleAnswer(event: Event) {
   if (!isCurrentlyChoosing) return;
   isCurrentlyChoosing = false;
-  switch (event.target) {
-    case randomizer.leftBtn:
-      currentPanSetting !== "LEFT" && markButtonWrong(randomizer.leftBtn);
-      break;
-    case randomizer.rightBtn:
-      currentPanSetting !== "RIGHT" && markButtonWrong(randomizer.rightBtn);
-      break;
-    case randomizer.noneBtn:
-      currentPanSetting !== "NONE" && markButtonWrong(randomizer.noneBtn);
-      break;
-    default:
-      console.log("Unknown element passed into handleAnswer");
-      break;
+  const selectedBtn = event.target as HTMLButtonElement;
+  const answerPanSetting = buttonToSetting(selectedBtn);
+  if (answerPanSetting === currentPanSetting) {
+    scoreObject.score += 1;
+  } else {
+    markButtonWrong(selectedBtn);
   }
+  scoreObject.total += 1;
+  updateScorePercentage();
   markCorrectButton();
 }
 
@@ -131,7 +141,7 @@ scoreObject.resetBtn.addEventListener("click", async () => {
   isCurrentlyChoosing = false;
   hideSliderAndDisplay(false);
   resetButtons();
-  setActiveTabPanValueClearBadge(0);
+  await setActiveTabPanValueClearBadge(0);
 });
 
 randomizer.leftBtn.addEventListener("click", handleAnswer);
