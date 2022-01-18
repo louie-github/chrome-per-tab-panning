@@ -30,6 +30,6 @@ it yourself.
 
 ## Steps:
 1. Clone this repository by running `git clone https://github.com/louie-github/chrome-per-tab-panning.git`
-2. Run `npm install && npm run build`
+2. Run `yarn install && yarn run build`
 3. Go to `chrome://extensions/`, enable Developer Mode, click on
    "Load unpacked", and select the `dist` folder.
