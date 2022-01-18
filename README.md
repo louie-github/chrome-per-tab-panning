@@ -5,10 +5,16 @@
 
 * Click on the extension icon and drag the slider to adjust the panning
   of the active tab.
+* Double-click on the slider to reset the panning value.
+* Alternatively, you can also click the "X" button next to the slider.
+  This also closes the tabCapture stream, removing the "This tab's
+  content is being shared" indicator on the tab.
 * The current panning setting is displayed as a badge next to the icon.
 * Click "Randomize" to randomly select either full left, full right, or
   no panning. Try to guess which one is selected using the buttons on
   the right. Your score is displayed below.
+* Click the "Reset" button next to the score display to reset your
+  score.
 
 # Credits
 Thanks to [piousdeer](https://github.com/piousdeer/chrome-volume-manager)
