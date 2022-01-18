@@ -15,7 +15,8 @@ const randomizer = {
   rightBtn: document.getElementById("randomizer-right") as HTMLButtonElement,
 };
 
-let currentPanValue;
+let currentPanSetting;
+let isCurrentlyChoosing = false;
 
 const scoreObject = {
   scoreSpan: document.querySelector(
@@ -72,7 +73,56 @@ async function randomizePanning() {
   return ret;
 }
 
+function markButtonCorrect(btn: HTMLButtonElement) {
+  btn.style.backgroundColor = colorRandomizerCorrect;
+}
+
+function markButtonWrong(btn: HTMLButtonElement) {
+  btn.style.backgroundColor = colorRandomizerWrong;
+}
+
+function markCorrectButton() {
+  switch (currentPanSetting) {
+    case "LEFT":
+      markButtonCorrect(randomizer.leftBtn);
+      break;
+    case "RIGHT":
+      markButtonCorrect(randomizer.rightBtn);
+      break;
+    case "NONE":
+      markButtonCorrect(randomizer.noneBtn);
+      break;
+    default:
+      break;
+  }
+}
+
+function handleAnswer(event: Event) {
+  if (!isCurrentlyChoosing) return;
+  isCurrentlyChoosing = false;
+  switch (event.target) {
+    case randomizer.leftBtn:
+      currentPanSetting !== "LEFT" && markButtonWrong(randomizer.leftBtn);
+      break;
+    case randomizer.rightBtn:
+      currentPanSetting !== "RIGHT" && markButtonWrong(randomizer.rightBtn);
+      break;
+    case randomizer.noneBtn:
+      currentPanSetting !== "NONE" && markButtonWrong(randomizer.noneBtn);
+      break;
+    default:
+      console.log("Unknown element passed into handleAnswer");
+      break;
+  }
+  markCorrectButton();
+}
+
 randomizer.randomizeBtn.addEventListener("click", async () => {
+  isCurrentlyChoosing = true;
   hideSliderAndDisplay(true);
-  currentPanValue = await randomizePanning();
+  currentPanSetting = await randomizePanning();
 });
+
+randomizer.leftBtn.addEventListener("click", handleAnswer);
+randomizer.rightBtn.addEventListener("click", handleAnswer);
+randomizer.noneBtn.addEventListener("click", handleAnswer);
