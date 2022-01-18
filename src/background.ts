@@ -104,7 +104,6 @@ async function updateBadge(tabId: number, value: number) {
  */
 async function disposeTab(tabId: number) {
   if (tabId in tabs) {
-    console.log(`Disposing tab: ${tabId}`);
     const tab = await tabs[tabId];
     tab.audioContext.close();
     tab.mediaStream.getTracks().forEach((track) => {
