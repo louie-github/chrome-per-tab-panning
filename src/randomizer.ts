@@ -6,20 +6,24 @@ import {
   colorRandomizerWrong,
 } from "./exports.module.scss";
 
-const randomizeBtn: HTMLButtonElement =
-  document.getElementById("randomizer-button");
-const randomizerLeftBtn: HTMLButtonElement =
-  document.getElementById("randomizer-left");
-const randomizerNoneBtn: HTMLButtonElement =
-  document.getElementById("randomizer-none");
-const randomizerRightBtn: HTMLButtonElement =
-  document.getElementById("randomizer-right");
+const randomizer = {
+  randomizeBtn: document.getElementById(
+    "randomizer-button"
+  ) as HTMLButtonElement,
+  leftBtn: document.getElementById("randomizer-left") as HTMLButtonElement,
+  noneBtn: document.getElementById("randomizer-none") as HTMLButtonElement,
+  rightBtn: document.getElementById("randomizer-right") as HTMLButtonElement,
+};
 
 let currentPanValue;
 
 const scoreObject = {
-  scoreSpan: document.querySelector(".score-container .score"),
-  totalSpan: document.querySelector(".score-container .total"),
+  scoreSpan: document.querySelector(
+    ".score-container .score"
+  ) as HTMLSpanElement,
+  totalSpan: document.querySelector(
+    ".score-container .total"
+  ) as HTMLSpanElement,
   percentageSpan: document.querySelector(".score-container .percentage"),
   get score() {
     return parseInt(this.scoreSpan.textContent);
@@ -68,7 +72,7 @@ async function randomizePanning() {
   return ret;
 }
 
-randomizeBtn.addEventListener("click", async () => {
+randomizer.randomizeBtn.addEventListener("click", async () => {
   hideSliderAndDisplay(true);
   currentPanValue = await randomizePanning();
 });

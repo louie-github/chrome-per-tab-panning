@@ -25,20 +25,21 @@ export {
 
 const inputEvent = new Event("input");
 
-const volumeContainer: HTMLDivElement =
-  document.querySelector(".display-container");
-const sliderContainer: HTMLDivElement = document.querySelector(
+const volumeContainer = document.querySelector(
+  ".display-container"
+) as HTMLDivElement;
+const sliderContainer = document.querySelector(
   ".display-row.main-row"
-);
-const slider: HTMLInputElement = document.getElementById("slider-main");
-const sliderDisplayContainer: HTMLDivElement = document.querySelector(
+) as HTMLDivElement;
+const slider = document.getElementById("slider-main") as HTMLInputElement;
+const sliderDisplayContainer = document.querySelector(
   ".display-row.slider-display"
-);
-const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
-const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
-const resetBtn: HTMLButtonElement = document.querySelector(
+) as HTMLDivElement;
+const valueSpan = document.getElementById("slider-value") as HTMLSpanElement;
+const lrSpan = document.getElementById("slider-lr") as HTMLSpanElement;
+const resetBtn = document.querySelector(
   ".display-row.main-row .reset-button"
-);
+) as HTMLButtonElement;
 
 async function getActiveTabId() {
   const [activeTab] = await chrome.tabs.query({
@@ -112,7 +113,7 @@ void (async () => {
   // Hide the slider until we know the initial pan value
   volumeContainer.style.opacity = "0";
 
-  const initialValue: number = await getActiveTabPanValue();
+  const initialValue = (await getActiveTabPanValue()) as unknown as number;
   slider.value = (initialValue * 100).toString();
   slider.dispatchEvent(inputEvent);
 

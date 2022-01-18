@@ -7,7 +7,8 @@ function getPercentPosition(slider: HTMLInputElement) {
   return ((value - min) / (max - min)) * 100;
 }
 
-for (const slider of document.querySelectorAll('input[type="range"]')) {
+for (const sliderEl of document.querySelectorAll('input[type="range"]')) {
+  const slider = sliderEl as HTMLInputElement;
   slider.addEventListener("input", () => {
     const percentage = getPercentPosition(slider);
     slider.style.background = `
