@@ -7,9 +7,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "parcel build src/popup.html src/background.ts",
     "build:scss-types": "tsm src/exports.module.scss",
-    "watch": "parcel watch src/popup.html src/background.ts"
+    "build": "yarn run build:scss-types && parcel build src/popup.html src/background.ts",
+    "watch": "yarn run build:scss-types && parcel watch src/popup.html src/background.ts"
   },
   "devDependencies": {
     "@parcel/config-webextension": "^2.2.1",
