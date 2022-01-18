@@ -16,6 +16,21 @@
 * Click the "Reset" button next to the score display to reset your
   score.
 
+# Notes
+Because we need to capture tab audio to pan it left and right, Chrome
+treats your tab as if it was being "shared" in some way, as in being
+shared in Google Meet or similar videoconferencing applications.
+
+This has the side effect of making full-screen not take up the whole
+display, but rather, just the entire tab area, excluding the address
+bar and anything above that.
+
+To stop this behavior, reset the panning value by pressing the "X"
+button next to the slider. This closes the tab capture stream which
+brings back the proper full-screen behavior.
+
+Any help is appreciated to fix this issue!
+
 # Credits
 Thanks to [piousdeer](https://github.com/piousdeer/chrome-volume-manager)
 for nearly all of the actual extension code written in this repository.
