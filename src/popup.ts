@@ -94,7 +94,6 @@ function hideSliderAndDisplay(flag: boolean) {
 function resetPanValue() {
   slider.value = "0";
   slider.dispatchEvent(inputEvent);
-  resetTab();
 }
 
 slider.addEventListener("input", async () => {
@@ -105,6 +104,7 @@ slider.addEventListener("input", async () => {
 slider.addEventListener("dblclick", resetPanValue);
 resetBtn.addEventListener("click", () => {
   resetPanValue();
+  resetTab();
   slider.style.opacity = "1";
   sliderDisplayContainer.style.opacity = "1";
 });
