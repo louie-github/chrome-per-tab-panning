@@ -5,19 +5,17 @@ $color-blue: hsl(234, 85%, 63%);
 $color-blue-slight-lighter: hsl(234, 80%, 69%);
 $color-blue-lighter: hsl(234, 86%, 78%);
 $color-blue-darker: hsl(234, 46%, 40%);
-$color-blue-desaturated: hsl(234, 10%, 70%);
+$color-blue-desaturated: hsl(234, 5%, 75%);
 
 $color-gray: hsl(0, 1%, 84%);
 $color-gray-dark: hsl(0, 0%, 69%);
 
-$color-green: hsl(165, 56%, 69%);
-$color-red: hsl(351, 48%, 65%);
+$color-green: hsl(165, 56%, 52%);
+$color-red: hsl(351, 48%, 52%);
 
 // Variables to be exported
 $color-slider-left: $color-blue;
 $color-slider-right: $color-blue-desaturated;
-$color-randomizer-correct: $color-green;
-$color-randomizer-wrong: $color-red;
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
@@ -150,6 +148,20 @@ input[type="range"] {
       background-color: $color-blue-slight-lighter;
       &:active {
         background-color: $color-blue-darker;
+      }
+
+      &.correct {
+        background-color: $color-green;
+        &:active {
+          background-color: darken($color-green, 20%);
+        }
+      }
+
+      &.wrong {
+        background-color: $color-red;
+        &:active {
+          background-color: darken($color-red, 20%);
+        }
       }
     }
   }

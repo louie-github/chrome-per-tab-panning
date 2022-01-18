@@ -1,10 +1,6 @@
 import Message from "./interfaces/Message";
 
 import { getActiveTabId, hideSliderAndDisplay } from "./popup";
-import {
-  colorRandomizerCorrect,
-  colorRandomizerWrong,
-} from "./exports.module.scss";
 
 const randomizer = {
   randomizeBtn: document.getElementById(
@@ -26,6 +22,7 @@ const scoreObject = {
     ".score-container .total"
   ) as HTMLSpanElement,
   percentageSpan: document.querySelector(".score-container .percentage"),
+  resetBtn: document.querySelector(".reset-score") as HTMLButtonElement,
   get score() {
     return parseInt(this.scoreSpan.textContent);
   },
@@ -74,11 +71,11 @@ async function randomizePanning() {
 }
 
 function markButtonCorrect(btn: HTMLButtonElement) {
-  btn.style.backgroundColor = colorRandomizerCorrect;
+  btn.classList.add("correct");
 }
 
 function markButtonWrong(btn: HTMLButtonElement) {
-  btn.style.backgroundColor = colorRandomizerWrong;
+  btn.classList.add("wrong");
 }
 
 function markCorrectButton() {
@@ -95,6 +92,12 @@ function markCorrectButton() {
     default:
       break;
   }
+}
+
+function resetButtons() {
+  randomizer.leftBtn.classList.remove("correct", "wrong");
+  randomizer.rightBtn.classList.remove("correct", "wrong");
+  randomizer.noneBtn.classList.remove("correct", "wrong");
 }
 
 function handleAnswer(event: Event) {
@@ -120,7 +123,15 @@ function handleAnswer(event: Event) {
 randomizer.randomizeBtn.addEventListener("click", async () => {
   isCurrentlyChoosing = true;
   hideSliderAndDisplay(true);
+  resetButtons();
   currentPanSetting = await randomizePanning();
+});
+
+scoreObject.resetBtn.addEventListener("click", async () => {
+  isCurrentlyChoosing = false;
+  hideSliderAndDisplay(false);
+  resetButtons();
+  setActiveTabPanValueClearBadge(0);
 });
 
 randomizer.leftBtn.addEventListener("click", handleAnswer);
