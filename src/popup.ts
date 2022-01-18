@@ -1,7 +1,25 @@
 /// <reference path="../node_modules/chrome-extension-async/chrome-extension-async.d.ts" />
 import "chrome-extension-async";
 
-import Message from "./interfaces/Message";
+export {
+  // Functions
+  getActiveTabId,
+  getActiveTabPanValue,
+  setActiveTabPanValue,
+  // DOM elements
+  volumeContainer,
+  sliderContainer,
+  slider,
+  textDisplayContainer,
+  valueSpan,
+  lrSpan,
+  resetBtn,
+  // DOM functions
+  isLeftRight,
+  updateSliderDisplay,
+  hideSliderAndDisplay,
+  resetSlider,
+};
 
 const inputEvent = new Event("input");
 
@@ -18,14 +36,13 @@ const valueSpan: HTMLSpanElement = document.getElementById("slider-value");
 const lrSpan: HTMLSpanElement = document.getElementById("slider-lr");
 const resetBtn: HTMLButtonElement = document.getElementById("reset-button");
 
-const randomizeBtn: HTMLButtonElement =
-  document.getElementById("randomizer-button");
-const randomizerLeftBtn: HTMLButtonElement =
-  document.getElementById("randomizer-left");
-const randomizerNoneBtn: HTMLButtonElement =
-  document.getElementById("randomizer-none");
-const randomizerRightBtn: HTMLButtonElement =
-  document.getElementById("randomizer-right");
+async function getActiveTabId() {
+  const [activeTab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  return activeTab.id;
+}
 
 // Tab communication
 async function getActiveTabPanValue() {
@@ -34,26 +51,11 @@ async function getActiveTabPanValue() {
   return await chrome.runtime.sendMessage(message);
 }
 
-async function setActiveTabPanValue(
-  value: number,
-  clearBadge: boolean = false
-) {
+async function setActiveTabPanValue(value: number) {
   const tabId = await getActiveTabId();
   let message: Message;
-  if (clearBadge) {
-    message = { name: "set-tab-pan-value-clear-badge", tabId, value };
-  } else {
-    message = { name: "set-tab-pan-value", tabId, value };
-  }
+  message = { name: "set-tab-pan-value", tabId, value };
   return await chrome.runtime.sendMessage(message);
-}
-
-async function getActiveTabId() {
-  const [activeTab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
-  return activeTab.id;
 }
 
 // popup utility functions
@@ -73,41 +75,15 @@ function updateSliderDisplay() {
   valueSpan.textContent = `${slider.value}%`;
 }
 
-function resetSlider() {
-  slider.value = "0";
-  slider.dispatchEvent(inputEvent);
-}
-
-// Randomizer functionality
-function toggleSliderAndDisplay(flag: boolean) {
-  // Toggle if flag is unspecified
-  if (flag === undefined) {
-    flag = sliderContainer.style.opacity === "0";
-  }
-  const opacityValue = flag ? "1" : "0";
+function hideSliderAndDisplay(flag: boolean) {
+  const opacityValue = flag ? "0" : "1";
   slider.style.opacity = opacityValue;
   textDisplayContainer.style.opacity = opacityValue;
 }
 
-async function randomizePanning() {
-  // Generate a random number from 0 to 2
-  const randValue = Math.floor(Math.random() * 3);
-  let ret: string;
-  switch (randValue) {
-    case 0:
-      await setActiveTabPanValue(-1, true);
-      ret = "LEFT";
-      break;
-    case 1:
-      await setActiveTabPanValue(1, true);
-      ret = "RIGHT";
-      break;
-    default:
-      await setActiveTabPanValue(0, true);
-      ret = "NONE";
-      break;
-  }
-  return ret;
+function resetSlider() {
+  slider.value = "0";
+  slider.dispatchEvent(inputEvent);
 }
 
 slider.addEventListener("input", async () => {
@@ -118,12 +94,8 @@ slider.addEventListener("input", async () => {
 slider.addEventListener("dblclick", resetSlider);
 resetBtn.addEventListener("click", () => {
   resetSlider();
-  toggleSliderAndDisplay(true);
-});
-
-randomizeBtn.addEventListener("click", async () => {
-  toggleSliderAndDisplay(false);
-  await randomizePanning();
+  slider.style.opacity = "1";
+  textDisplayContainer.style.opacity = "1";
 });
 
 void (async () => {
