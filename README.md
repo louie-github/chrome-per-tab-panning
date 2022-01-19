@@ -1,7 +1,9 @@
-<center>
-  <h1 align="center">Per-tab Panning</h1>
-  <h3 align="center">A simple Chrome extension to pan individual tabs left and right.</h3>
-</center><br>
+<div align="center">
+  <h1>Per-tab Panning</h1>
+  <h3>A simple Chrome extension to pan individual tabs left and right.</h3>
+  <img src="sample.png" alt="Sample screenshot">
+</div>
+<br>
 
 * Click on the extension icon and drag the slider to adjust the panning
   of the active tab.
