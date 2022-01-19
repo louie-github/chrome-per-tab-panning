@@ -1,6 +1,6 @@
 import Message from "./interfaces/Message";
 
-import { getActiveTabId, hideSliderAndDisplay } from "./popup";
+import { getActiveTabId, hideSliderAndDisplay, resetSlider } from "./popup";
 
 enum PanSetting {
   LEFT = "LEFT",
@@ -69,6 +69,14 @@ const scoreObject = {
   },
 };
 
+interface RandomizerSession {
+  correctAnswer: PanSetting;
+  userAnswer: PanSetting;
+  wasCorrect: boolean;
+}
+
+const randomizerSessions: RandomizerSession[] = [];
+
 function updateScorePercentage() {
   let percentage = Math.round((scoreObject.score / scoreObject.total) * 100);
   if (isNaN(percentage)) percentage = 0;
@@ -121,7 +129,8 @@ function handleAnswer(event: Event) {
   isCurrentlyChoosing = false;
   const selectedBtn = event.target as HTMLButtonElement;
   const answerPanSetting = buttonToSetting(selectedBtn);
-  if (answerPanSetting === currentPanSetting) {
+  const wasCorrect = answerPanSetting === currentPanSetting;
+  if (wasCorrect) {
     scoreObject.score += 1;
   } else {
     markButtonWrong(selectedBtn);
@@ -129,6 +138,21 @@ function handleAnswer(event: Event) {
   scoreObject.total += 1;
   updateScorePercentage();
   markCorrectButton();
+  randomizerSessions.push({
+    correctAnswer: currentPanSetting,
+    userAnswer: answerPanSetting,
+    wasCorrect: wasCorrect,
+  });
+}
+
+async function resetSession() {
+  isCurrentlyChoosing = false;
+  hideSliderAndDisplay(false);
+  scoreObject.score = 0;
+  scoreObject.total = 0;
+  updateScorePercentage();
+  resetButtons();
+  await setActiveTabPanValueClearBadge(0);
 }
 
 randomizer.randomizeBtn.addEventListener("click", async () => {
@@ -138,15 +162,7 @@ randomizer.randomizeBtn.addEventListener("click", async () => {
   currentPanSetting = await randomizePanning();
 });
 
-scoreObject.resetBtn.addEventListener("click", async () => {
-  isCurrentlyChoosing = false;
-  hideSliderAndDisplay(false);
-  scoreObject.score = 0;
-  scoreObject.total = 0;
-  updateScorePercentage();
-  resetButtons();
-  await setActiveTabPanValueClearBadge(0);
-});
+scoreObject.resetBtn.addEventListener("click", resetSession);
 
 randomizer.leftBtn.addEventListener("click", handleAnswer);
 randomizer.rightBtn.addEventListener("click", handleAnswer);
