@@ -71,6 +71,7 @@ const scoreObject = {
 
 interface RandomizerSession {
   index: number;
+  timeTaken: number;
   correctAnswer: PanSetting;
   userAnswer: PanSetting;
   wasCorrect: boolean;
@@ -81,6 +82,14 @@ const exportSessionBtn = document.querySelector(
 ) as HTMLButtonElement;
 const randomizerSessions: RandomizerSession[] = [];
 let sessionIndex = 0;
+let currentSessionStartTimeMs: number;
+let currentSessionEndTimeMs: number;
+
+function clearArray<T>(arr: Array<T>) {
+  while (arr.length != 0) {
+    arr.pop();
+  }
+}
 
 function updateScorePercentage() {
   let percentage = Math.round((scoreObject.score / scoreObject.total) * 100);
@@ -130,6 +139,7 @@ function resetButtons() {
 }
 
 function handleAnswer(event: Event) {
+  currentSessionEndTimeMs = Date.now();
   if (!isCurrentlyChoosing) return;
   isCurrentlyChoosing = false;
   const selectedBtn = event.target as HTMLButtonElement;
@@ -143,13 +153,23 @@ function handleAnswer(event: Event) {
   scoreObject.total += 1;
   updateScorePercentage();
   markCorrectButton();
+
   randomizerSessions.push({
     index: sessionIndex,
+    timeTaken: (currentSessionEndTimeMs - currentSessionStartTimeMs) / 1000,
     correctAnswer: currentPanSetting,
     userAnswer: answerPanSetting,
     wasCorrect: wasCorrect,
   });
   sessionIndex += 1;
+}
+
+async function startSession() {
+  isCurrentlyChoosing = true;
+  hideSliderAndDisplay(true);
+  resetButtons();
+  currentPanSetting = await randomizePanning();
+  currentSessionStartTimeMs = Date.now();
 }
 
 async function resetSession() {
@@ -159,6 +179,8 @@ async function resetSession() {
   scoreObject.total = 0;
   updateScorePercentage();
   resetButtons();
+  clearArray(randomizerSessions);
+  sessionIndex = 0;
   await setActiveTabPanValueClearBadge(0);
 }
 
@@ -178,12 +200,7 @@ function exportSession() {
   saveText("session.json", jsonData, true);
 }
 
-randomizer.randomizeBtn.addEventListener("click", async () => {
-  isCurrentlyChoosing = true;
-  hideSliderAndDisplay(true);
-  resetButtons();
-  currentPanSetting = await randomizePanning();
-});
+randomizer.randomizeBtn.addEventListener("click", startSession);
 
 scoreObject.resetBtn.addEventListener("click", resetSession);
 exportSessionBtn.addEventListener("click", exportSession);
