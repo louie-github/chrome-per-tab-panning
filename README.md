@@ -15,6 +15,8 @@
   the right. Your score is displayed below.
 * Click the "Reset" button next to the score display to reset your
   score.
+* Click the "Export current session" button to export your session data
+  (what you answered as guesses while randomizing) as a JSON file.
 
 # Notes
 Because we need to capture tab audio to pan it left and right, Chrome
@@ -48,11 +50,17 @@ some Ionicons icons, and is also licensed under the same
 
 # Usage
 This extension is not published in the Chrome Web Store as it is in
-development and is mainly an **academic exercise**; you have to build
-it yourself.
+development and is mainly an **academic exercise**. It is preferred to
+build the extension yourself.
 
 ## Steps:
 1. Clone this repository by running `git clone https://github.com/louie-github/chrome-per-tab-panning.git`
 2. Run `yarn install && yarn run build`
 3. Go to `chrome://extensions/`, enable Developer Mode, click on
    "Load unpacked", and select the `dist` folder.
+
+
+Alternatively, you can download a built version from the
+[Releases](https://github.com/louie-github/chrome-per-tab-panning/releases)
+page. Download the ZIP file, extract the "per-tab-panning" folder, and
+load that folder as an unpacked extension as described above in Step 3.
