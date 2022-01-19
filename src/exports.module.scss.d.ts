@@ -8,6 +8,7 @@ export const displayRow: string;
 export const mainRow: string;
 export const percentageContainer: string;
 export const randomizer: string;
+export const randomizerExports: string;
 export const randomizerResults: string;
 export const resetButton: string;
 export const scoreContainer: string;

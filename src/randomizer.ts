@@ -70,12 +70,17 @@ const scoreObject = {
 };
 
 interface RandomizerSession {
+  index: number;
   correctAnswer: PanSetting;
   userAnswer: PanSetting;
   wasCorrect: boolean;
 }
 
+const exportSessionBtn = document.querySelector(
+  ".randomizer-exports .export-current"
+) as HTMLButtonElement;
 const randomizerSessions: RandomizerSession[] = [];
+let sessionIndex = 0;
 
 function updateScorePercentage() {
   let percentage = Math.round((scoreObject.score / scoreObject.total) * 100);
@@ -139,10 +144,12 @@ function handleAnswer(event: Event) {
   updateScorePercentage();
   markCorrectButton();
   randomizerSessions.push({
+    index: sessionIndex,
     correctAnswer: currentPanSetting,
     userAnswer: answerPanSetting,
     wasCorrect: wasCorrect,
   });
+  sessionIndex += 1;
 }
 
 async function resetSession() {
@@ -155,6 +162,22 @@ async function resetSession() {
   await setActiveTabPanValueClearBadge(0);
 }
 
+function saveText(filename, text, isJson: boolean = false) {
+  const downloaderElement = document.createElement("a");
+  const mimeType = isJson ? "application/json" : "text/plain";
+  downloaderElement.href =
+    `data:${mimeType};charset=utf-8,` + encodeURIComponent(text);
+  downloaderElement.download = filename;
+  document.body.appendChild(downloaderElement);
+  downloaderElement.click();
+  document.body.removeChild(downloaderElement);
+}
+
+function exportSession() {
+  const jsonData = JSON.stringify({ sessions: randomizerSessions });
+  saveText("session.json", jsonData, true);
+}
+
 randomizer.randomizeBtn.addEventListener("click", async () => {
   isCurrentlyChoosing = true;
   hideSliderAndDisplay(true);
@@ -163,6 +186,7 @@ randomizer.randomizeBtn.addEventListener("click", async () => {
 });
 
 scoreObject.resetBtn.addEventListener("click", resetSession);
+exportSessionBtn.addEventListener("click", exportSession);
 
 randomizer.leftBtn.addEventListener("click", handleAnswer);
 randomizer.rightBtn.addEventListener("click", handleAnswer);

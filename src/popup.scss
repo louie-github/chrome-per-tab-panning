@@ -17,7 +17,7 @@ $color-red: hsl(351, 48%, 52%);
 $color-slider-left: $color-blue;
 $color-slider-right: $color-blue-desaturated;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap");
 
 $ui-font: "Inter", "Roboto", sans-serif;
 
@@ -175,6 +175,21 @@ input[type="range"] {
     .score-container {
       .percentage-container {
         margin-left: 0.25em;
+      }
+    }
+  }
+
+  &.randomizer-exports {
+    justify-content: center;
+    margin-top: 1em;
+
+    button {
+      font-weight: 800;
+      font-size: 1.2em;
+      color: black;
+      background-color: $color-green;
+      &:active {
+        background-color: darken($color-green, 20%);
       }
     }
   }
