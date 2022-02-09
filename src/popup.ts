@@ -12,7 +12,7 @@ export {
   volumeContainer,
   sliderContainer,
   slider,
-  sliderDisplayContainer as textDisplayContainer,
+  sliderDisplayContainer,
   valueSpan,
   lrSpan,
   resetBtn,
@@ -20,7 +20,7 @@ export {
   isLeftRight,
   updateSliderDisplay,
   hideSliderAndDisplay,
-  resetPanValue as resetSlider,
+  resetPanValue,
 };
 
 const inputEvent = new Event("input");

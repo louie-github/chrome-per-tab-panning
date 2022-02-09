@@ -1,6 +1,6 @@
 import Message from "./interfaces/Message";
 
-import { getActiveTabId, hideSliderAndDisplay, resetSlider } from "./popup";
+import { getActiveTabId, hideSliderAndDisplay } from "./popup";
 
 enum PanSetting {
   LEFT = "LEFT",
